@@ -1,255 +1,400 @@
-"""
-HF/VHF/UHF Antenna Calculator
-"""
-import math
-
-selection = ""
-while (selection != "1") and (selection != "2") and (selection != "3") and (selection != "4") and (selection != "5") and (selection != "6") and (selection != "7") and (selection != "8") and (selection != "9") and (selection != "10") and (selection != "11") and (selection != "12") and (selection != "13") and (selection != "14") and (selection != "15") and (selection != "exit"):
-    print("What would you like to do today?")
-    print("1 - Calculate wavelength in meters")
-    print("2 - dBm to milliwatt conversion")
-    print("3 - Milliwatt to dBm conversion")
-    print("4 - Make full wavelength dipole antenna")
-    print("5 - Make 1/2 wavelength dipole antenna")
-    print("6 - Make 1/4 wavelength dipole antenna")
-    print("7 - Make full wavelength yagi antenna")
-    print("8 - Make 1/2 wavelength yagi antenna")
-    print("9 - Make 1/4 wavelength yagi antenna")
-    print("10 - Make full wave ground plane antenna")
-    print("11 - Make 1/2 wavelength ground plane antenna")
-    print("12 - Make 1/4 wavelength ground plane antenna")
-    print("13 - HF antenna length adjustment to desired frequency")
-    print("14 - Calculate line loss in dBm for RG-58 or RG-8 cable for a given frequency")
-    print("15 - Ohms law calculations")
-    selection = input("Enter selection:")
-
-light = int(300)
-    
-if selection == "1":   
-    freq = float(input("Enter frequency in MHz:"))
-    wavelength = light / freq
-    print("The wavelength for your frequncy is", "%.2f" % wavelength, "m.")
-
-if selection == "2":
-    dbm = float(input("Enter dBm value to convert:"))
-    mw = 10**(dbm / 10)
-    print(dbm, "is equal to", "%.2f" % mw, "mW.")
-    
-if selection == "3":
-    mw = float(input("Enter mW value to convert:"))
-    dbm = math.log10(mw) * 10
-    print(mw, "is equal to", "%.2f" % dbm, "dBm.")
-    
-if selection == "4":
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    element = wavelength / 2
-    dipole = wavelength
-    print("The length of element will be", "%.3f" % element, "m.")
-    print("The entire length of the dipole will be", "%.3f" % dipole, "m.")
-    
-if selection == "5":
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    element = wavelength / 4
-    dipole = wavelength / 2
-    print("The length of element will be", "%.3f" % element, "m.")
-    print("The entire length of the dipole will be", "%.3f" % dipole, "m.")
-    
-if selection == "6":
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    element = wavelength / 8
-    dipole = wavelength / 4
-    print("The length of element will be", "%.3f" % element, "m.")
-    print("The entire length of the dipole will be", "%.3f" % dipole, "m.")
+""" 
+HF/VHF/UHF Antenna Calculator 
+""" 
+import math 
   
-if selection == "7":
-    freq = float(input("Enter desired frequency in MHz:"))
+# fix 13 
+# add functionality to choose elements for a yagi
+# GUI?
+
+selection = "" 
+while selection not in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "exit"): 
+     print("What would you like to do today?") 
+     print("1 - Calculate wavelength in meters") 
+     print("2 - dBm to milliwatt conversion") 
+     print("3 - Milliwatt to dBm conversion") 
+     print("4 - Make full wavelength dipole antenna") 
+     print("5 - Make 1/2 wavelength dipole antenna") 
+     print("6 - Make 1/4 wavelength dipole antenna") 
+     print("7 - Make full wavelength yagi antenna") 
+     print("8 - Make 1/2 wavelength yagi antenna") 
+     print("9 - Make 1/4 wavelength yagi antenna") 
+     print("10 - Make full wave ground plane antenna") 
+     print("11 - Make 1/2 wavelength ground plane antenna") 
+     print("12 - Make 1/4 wavelength ground plane antenna") 
+     print("13 - HF antenna length adjustment to desired frequency") 
+     print("14 - Calculate line loss in dBm for RG-58 or RG-8 cable for a given frequency") 
+     print("15 - Ohms law calculations")
+     print("Or type 'exit' to close.") 
+     selection = input("Enter selection:") 
+  
+ 
+light = int(300) 
+       
+if selection == "1":    
+    freq = float(input("Enter frequency in MHz:")) 
     wavelength = light / freq
-    ele1 = float(0.525) * wavelength
-    ele2 = float(0.475) * wavelength
-    ele3 = float(0.450) * wavelength
+    wavelengthfeet = wavelength * 3.2808 
+    wavelengthfoots = int(wavelengthfeet)
+    wavelengthinches = (wavelengthfeet % 1) * 12
+    print("The wavelength for your frequncy is", "%.2f" % wavelength, "m. or", wavelengthfoots, "ft.", "%.1f" % wavelengthinches, "in.")
+
+
+if selection == "2": 
+    dbm = float(input("Enter dBm value to convert:")) 
+    mw = 10**(dbm / 10) 
+    print(dbm, "is equal to", "%.2f" % mw, "mW.") 
+      
+if selection == "3": 
+    mw = float(input("Enter mW value to convert:")) 
+    dbm = math.log10(mw) * 10 
+    print(mw, "is equal to", "%.2f" % dbm, "dBm.") 
+     
+if selection == "4": 
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    element = wavelength / 2 
+    eleimp = element * 3.2808
+    eleimpft = int(eleimp)
+    eleimpin = (eleimp % 1) * 12
+    dipole = wavelength 
+    diimp = dipole * 3.2808
+    diimpft = int(diimp)
+    diimpin = (diimp % 1) * 12
+    print("The length of element will be", "%.3f" % element, "m. or", eleimpft, "ft.", "%.1f" % eleimpin, "in.") 
+    print("The entire length of the dipole will be", "%.3f" % dipole, "m. or", diimpft, "ft.", "%.1f" % diimpin, "in.") 
+     
+if selection == "5": 
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    element = wavelength / 4 
+    eleimp = element * 3.2808
+    eleimpft = int(eleimp)
+    eleimpin = (eleimp % 1) * 12
+    dipole = wavelength / 2 
+    diimp = dipole * 3.2808
+    diimpft = int(diimp)
+    diimpin = (diimp % 1) * 12
+    print("The length of element will be", "%.3f" % element, "m. or", eleimpft, "ft.", "%.1f" % eleimpin, "in.") 
+    print("The entire length of the dipole will be", "%.3f" % dipole, "m. or", diimpft, "ft.", "%.1f" % diimpin, "in.") 
+     
+if selection == "6": 
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    element = wavelength / 8 
+    eleimp = element * 3.2808
+    eleimpft = int(eleimp)
+    eleimpin = (eleimp % 1) * 12
+    dipole = wavelength / 4 
+    diimp = dipole * 3.2808
+    diimpft = int(diimp)
+    diimpin = (diimp % 1) * 12
+    print("The length of element will be", "%.3f" % element, "m.  or", eleimpft, "ft.", "%.1f" % eleimpin, "in.") 
+    print("The entire length of the dipole will be", "%.3f" % dipole, "m. or", diimpft, "ft.", "%.1f" % diimpin, "in.") 
+    
+if selection == "7": 
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    ele1 = float(0.525) * wavelength 
+    ele1i = ele1 * 3.2808
+    ele1ift = int(ele1i)
+    ele1iin = (ele1i % 1) * 12
+    ele2 = float(0.475) * wavelength 
+    ele2i = ele2 * 3.2808
+    ele2ift = int(ele2i)
+    ele2iin = (ele2i % 1) * 12
+    ele3 = float(0.450) * wavelength 
+    ele3i = ele3 * 3.2808
+    ele3ift = int(ele3i)
+    ele3iin = (ele3i % 1) * 12
     ele4 = float(0.430) * wavelength
+    ele4i = ele4 * 3.2808
+    ele4ift = int(ele4i)
+    ele4iin = (ele4i % 1) * 12 
     ele5 = float(0.410) * wavelength
+    ele5i = ele5 * 3.2808
+    ele5ift = int(ele5i)
+    ele5iin = (ele5i % 1) * 12 
     spac1 = float(0.20) * wavelength
+    spac1i = spac1 * 3.2808
+    spac1ift = int(spac1i)
+    spac1iin = (spac1i % 1) * 12 
     spac2 = float(0.15) * wavelength
+    spac2i = spac2 * 3.2808
+    spac2ift = int(spac2i)
+    spac2iin = (spac2i % 1) * 12 
     spac3 = float(0.16) * wavelength
+    spac3i = spac3 * 3.2808 
+    spac3ift = int(spac3i)
+    spac3iin = (spac3i % 1) * 12
     spac4 = float(0.17) * wavelength
-    print("Reflector:", "%.3f" % ele1, "m. Spacing:", "%.3f" % spac1, "m."
-          "\n" "Driven element:", "%.3f" % ele2, "m. Spacing:", "%.3f" % spac2, "m."
-          "\n" "First director:", "%.3f" % ele3, "m. Spacing:", "%.3f" % spac3, "m."
-          "\n" "Second director:", "%.3f" % ele4, "m. Spacing", "%.3f" % spac4, "m."
-          "\n" "Third director:", "%.3f" % ele5, "m.")
-    
-if selection == "8":
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    wavelength1 = wavelength / 2
+    spac4i = spac4 * 3.2808
+    spac4ift = int(spac4i)
+    spac4iin = (spac4i % 1) * 12 
+    print("Reflector:", "%.3f" % ele1, "m. Spacing:", "%.3f" % spac1, "m." 
+          "\n" "Driven element:", "%.3f" % ele2, "m. Spacing:", "%.3f" % spac2, "m." 
+          "\n" "First director:", "%.3f" % ele3, "m. Spacing:", "%.3f" % spac3, "m." 
+          "\n" "Second director:", "%.3f" % ele4, "m. Spacing", "%.3f" % spac4, "m." 
+          "\n" "Third director:", "%.3f" % ele5, "m." 
+          "\n" "Reflector:", ele1ift, "ft.", "%.1f" % ele1iin, "in. Spacing:", spac1ift, "ft.", "%.1f" % spac1iin, "in." 
+          "\n" "Driven element:", ele2ift, "ft.", "%.1f" % ele2iin, "in. Spacing:", spac2ift, "ft.", "%.1f" % spac2iin, "in." 
+          "\n" "First director:", ele3ift, "ft.", "%.1f" % ele3iin, "in. Spacing:", spac3ift, "ft.", "%.1f" % spac3iin, "in." 
+          "\n" "Second director:", ele4ift, "ft.", "%.1f" % ele4iin, "in. Spacing:", spac4ift, "ft.", "%.1f" % spac4iin, "in."
+          "\n" "Third director:", ele5ift, "ft.", "%.1f" % ele5iin, "in.") 
+     
+if selection == "8": 
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    wavelength1 = wavelength / 2 
     ele1 = float(0.525) * wavelength1
+    ele1i = ele1 * 3.2808
+    ele1ift = int(ele1i)
+    ele1iin = (ele1i % 1) * 12 
     ele2 = float(0.475) * wavelength1
+    ele2i = ele2 * 3.2808
+    ele2ift = int(ele2i)
+    ele2iin = (ele2i % 1) * 12 
     ele3 = float(0.450) * wavelength1
+    ele3i = ele3 * 3.2808
+    ele3ift = int(ele3i)
+    ele3iin = (ele3i % 1) * 12 
     ele4 = float(0.430) * wavelength1
+    ele4i = ele4 * 3.2808
+    ele4ift = int(ele4i)
+    ele4iin = (ele4i % 1) * 12 
     ele5 = float(0.410) * wavelength1
-    spac1 = float(0.20) * wavelength1
+    ele5i = ele5 * 3.2808
+    ele5ift = int(ele5i)
+    ele5iin = (ele5i % 1) * 12 
+    spac1 = float(0.20) * wavelength1 
+    spac1i = spac1 * 3.2808
+    spac1ift = int(spac1i)
+    spac1iin = (spac1i % 1) * 12
     spac2 = float(0.15) * wavelength1
-    spac3 = float(0.16) * wavelength1
+    spac2i = spac2 * 3.2808
+    spac2ift = int(spac2i)
+    spac2iin = (spac2i % 1) * 12 
+    spac3 = float(0.16) * wavelength1 
+    spac3i = spac3 * 3.2808
+    spac3ift = int(spac3i)
+    spac3iin = (spac3i % 1) * 12
     spac4 = float(0.17) * wavelength1
-    print("Reflector:", "%.3f" % ele1, "m. Spacing:", "%.3f" % spac1, "m."
-          "\n" "Driven element:", "%.3f" % ele2, "m. Spacing:", "%.3f" % spac2, "m."
-          "\n" "First director:", "%.3f" % ele3, "m. Spacing:", "%.3f" % spac3, "m."
-          "\n" "Second director:", "%.3f" % ele4, "m. Spacing", "%.3f" % spac4, "m."
-          "\n" "Third director:", "%.3f" % ele5, "m.")
-    
-if selection == "9":
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    wavelength1 = wavelength / 4
+    spac4i = spac4 * 3.2808
+    spac4ift = int(spac4i)
+    spac4iin = (spac4i % 1) * 12 
+    print("Reflector:", "%.3f" % ele1, "m. Spacing:", "%.3f" % spac1, "m." 
+          "\n" "Driven element:", "%.3f" % ele2, "m. Spacing:", "%.3f" % spac2, "m." 
+          "\n" "First director:", "%.3f" % ele3, "m. Spacing:", "%.3f" % spac3, "m." 
+          "\n" "Second director:", "%.3f" % ele4, "m. Spacing", "%.3f" % spac4, "m." 
+          "\n" "Third director:", "%.3f" % ele5, "m."
+          "\n" "Reflector:", ele1ift, "ft.", "%.1f" % ele1iin, "in. Spacing:", spac1ift, "ft.", "%.1f" % spac1iin, "in." 
+          "\n" "Driven element:", ele2ift, "ft.", "%.1f" % ele2iin, "in. Spacing:", spac2ift, "ft.", "%.1f" % spac2iin, "in." 
+          "\n" "First director:", ele3ift, "ft.", "%.1f" % ele3iin, "in. Spacing:", spac3ift, "ft.", "%.1f" % spac3iin, "in." 
+          "\n" "Second director:", ele4ift, "ft.", "%.1f" % ele4iin, "in. Spacing:", spac4ift, "ft.", "%.1f" % spac4iin, "in."
+          "\n" "Third director:", ele5ift, "ft.", "%.1f" % ele5iin, "in.") 
+     
+if selection == "9": 
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    wavelength1 = wavelength / 4 
     ele1 = float(0.525) * wavelength1
+    ele1i = ele1 * 3.2808
+    ele1ift = int(ele1i)
+    ele1iin = (ele1i % 1) * 12 
     ele2 = float(0.475) * wavelength1
+    ele2i = ele2 * 3.2808
+    ele2ift = int(ele2i)
+    ele2iin = (ele2i % 1) * 12 
     ele3 = float(0.450) * wavelength1
+    ele3i = ele3 * 3.2808
+    ele3ift = int(ele3i)
+    ele3iin = (ele3i % 1) * 12 
     ele4 = float(0.430) * wavelength1
+    ele4i = ele4 * 3.2808
+    ele4ift = int(ele4i)
+    ele4iin = (ele4i % 1) * 12 
     ele5 = float(0.410) * wavelength1
-    spac1 = float(0.20) * wavelength1
+    ele5i = ele5 * 3.2808
+    ele5ift = int(ele5i)
+    ele5iin = (ele5i % 1) * 12 
+    spac1 = float(0.20) * wavelength1 
+    spac1i = spac1 * 3.2808
+    spac1ift = int(spac1i)
+    spac1iin = (spac1i % 1) * 12
     spac2 = float(0.15) * wavelength1
-    spac3 = float(0.16) * wavelength1
+    spac2i = spac2 * 3.2808
+    spac2ift = int(spac2i)
+    spac2iin = (spac2i % 1) * 12 
+    spac3 = float(0.16) * wavelength1 
+    spac3i = spac3 * 3.2808
+    spac3ift = int(spac3i)
+    spac3iin = (spac3i % 1) * 12
     spac4 = float(0.17) * wavelength1
-    print("Reflector:", "%.3f" % ele1, "m. Spacing:", "%.3f" % spac1, "m."
-          "\n" "Driven element:", "%.3f" % ele2, "m. Spacing:", "%.3f" % spac2, "m."
-          "\n" "First director:", "%.3f" % ele3, "m. Spacing:", "%.3f" % spac3, "m."
-          "\n" "Second director:", "%.3f" % ele4, "m. Spacing", "%.3f" % spac4, "m."
-          "\n" "Third director:", "%.3f" % ele5, "m.")
+    spac4i = spac4 * 3.2808
+    spac4ift = int(spac4i)
+    spac4iin = (spac4i % 1) * 12 
+    print("Reflector:", "%.3f" % ele1, "m. Spacing:", "%.3f" % spac1, "m." 
+          "\n" "Driven element:", "%.3f" % ele2, "m. Spacing:", "%.3f" % spac2, "m." 
+          "\n" "First director:", "%.3f" % ele3, "m. Spacing:", "%.3f" % spac3, "m." 
+          "\n" "Second director:", "%.3f" % ele4, "m. Spacing", "%.3f" % spac4, "m." 
+          "\n" "Third director:", "%.3f" % ele5, "m."
+          "\n" "Reflector:", ele1ift, "ft.", "%.1f" % ele1iin, "in. Spacing:", spac1ift, "ft.", "%.1f" % spac1iin, "in." 
+          "\n" "Driven element:", ele2ift, "ft.", "%.1f" % ele2iin, "in. Spacing:", spac2ift, "ft.", "%.1f" % spac2iin, "in." 
+          "\n" "First director:", ele3ift, "ft.", "%.1f" % ele3iin, "in. Spacing:", spac3ift, "ft.", "%.1f" % spac3iin, "in." 
+          "\n" "Second director:", ele4ift, "ft.", "%.1f" % ele4iin, "in. Spacing:", spac4ift, "ft.", "%.1f" % spac4iin, "in."
+          "\n" "Third director:", ele5ift, "ft.", "%.1f" % ele5iin, "in.")
 
-if selection == "10": 
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    element = wavelength / 2
-    radials = wavelength / 2
-    print("Vertical element:", "%.3f" % element, "m. Radials or ground plane length away from antenna:", "%.3f" % radials, "m.")
-    
-if selection == "11": 
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    element = wavelength / 4
-    radials = wavelength / 4
-    print("Vertical element:", "%.3f" % element, "m. Radials or ground plane length away from antenna:", "%.3f" % radials, "m.")
-    
-if selection == "12": 
-    freq = float(input("Enter desired frequency in MHz:"))
-    wavelength = light / freq
-    element = wavelength / 8
-    radials = wavelength / 8
-    print("Vertical element:", "%.3f" % element, "m. Radials or ground plane length away from antenna:", "%.3f" % radials, "m.")
-    
-if selection == "13":
-    ferq = float(input("Enter resonant frequecny in MHz:"))
-    desfreq = float(input("Enter desired frequency in MHz:"))
-    eleadjpercent = (10 * freq / desfreq) - 100
-    wavelength = light / freq
-    adj = (eleadjpercent/10) * wavelength
-    print("Your antenna is", "%.3f" % eleadjpercent + "% too long. Reduce the total length of the element by", "%.3f" % adj + "m.")
-    
-if selection == "14":
-    cableselection = ""
-    while (cableselection != "1") and (cableselection != "2"):
-        print("1 - RG-58")
-        print("2 - RG-8")
-        cableselection = input("Enter your cable type from the selection above:")
-    if cableselection == "1":
-        print("1 - 1 MHz")
-        print("2 - 10 MHz")
-        print("3 - 50 MHz")
-        print("4 - 100 MHz")
-        print("5 - 200 MHz")
-        freq = input("Enter the closest frequency from the list above that will be used with this cable:")
-        if freq == "1":
-            loss = 0.4
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-58 cable at 1 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "2":
-            loss = 1.4
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-58 cable at 10 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "3":
-            loss = 3.3
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-58 cable at 50 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "4":
-            loss = 4.9
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-58 cable at 100 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "5":
-            loss = 7.3
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-58 cable at 200 MHz at", length, "ft. will be", totalloss, "dBm.")
-    if cableselection == "2":
-        print("1 - 1 MHz")
-        print("2 - 10 MHz")
-        print("3 - 50 MHz")
-        print("4 - 100 MHz")
-        print("5 - 200 MHz")
-        freq = input("Enter the closest frequency from the list above that will be used with this cable:")
-        if freq == "1":
-            loss = 0.5
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-8 cable at 1 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "2":
-            loss = 1.0
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-8 cable at 10 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "3":
-            loss = 2.5
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-8 cable at 50 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "4":
-            loss = 3.6
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-8 cable at 100 MHz at", length, "ft. will be", totalloss, "dBm.")
-        if freq == "5":
-            loss = 5.4
-            length = float(input("Enter the approximate length of your cable in feet:"))
-            totalloss = loss * length/100
-            print("The loss of your RG-8 cable at 200 MHz at", length, "ft. will be", totalloss, "dBm.")
-        
-if selection == "15":
-    choice = ""
-    while (choice != "1") and (choice != "2") and (choice != "3") and (choice != "4"):
-        print("1 - Calculate power")
-        print("2 - Calculate current")
-        print("3 - Calculate resistance")
-        print("4 - Calculate voltage")
-        choice = input("Enter what you want to calculate from the list above:")
-    if choice == "1":
-        volts = float(input("Enter volts:"))
-        amps = float(input("Enter amps:"))
-        power = amps * volts
-        print(power, "W.")
-    if choice == "2":
-        current = float(input("Enter volts:"))
-        watts = float(input("Enter watts:"))
-        power = watts / volts
-        print(current, "A.")  
-    if choice == "3":
-        volts = float(input("Enter volts:"))
-        amps = float(input("Enter amps:"))
-        resistance = volts / amps
-        print(resistance, "ohms.") 
-    if choice == "4":
-        ohms = float(input("Enter ohms:"))
-        amps = float(input("Enter amps:"))
-        voltage = amps / ohms
-        print(voltage, "volts.")
 
-        
-elif selection == "exit":
-    print("Goodbye")
-    
+if selection == "10":  
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    element = wavelength / 2 
+    elementi = element * 3.2808
+    elementift = int(elementi)
+    elementiin = (elementi % 1) * 12 
+    radials = wavelength / 2 
+    radialsi = radials * 3.2808
+    radialsift = int(radialsi)
+    radialsiin = (radialsi % 1) * 12
+    print("Vertical element:", "%.3f" % element, "m. or", elementift, "ft", "%.1f" % elementiin, "in. Radials or ground plane length away from antenna:", "%.3f" % radials, "m. or", radialsift, "ft", "%.1f" % radialsiin, "in.") 
+     
+if selection == "11":  
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    element = wavelength / 4 
+    elementi = element * 3.2808
+    elementift = int(elementi)
+    elementiin = (elementi % 1) * 12 
+    radials = wavelength / 4 
+    radialsi = radials * 3.2808
+    radialsift = int(radialsi)
+    radialsiin = (radialsi % 1) * 12
+    print("Vertical element:", "%.3f" % element, "m. or", elementift, "ft", "%.1f" % elementiin, "in. Radials or ground plane length away from antenna:", "%.3f" % radials, "m. or", radialsift, "ft", "%.1f" % radialsiin, "in.") 
+      
+if selection == "12":  
+    freq = float(input("Enter desired frequency in MHz:")) 
+    wavelength = light / freq 
+    element = wavelength / 8 
+    elementi = element * 3.2808
+    elementift = int(elementi)
+    elementiin = (elementi % 1) * 12 
+    radials = wavelength / 8 
+    radialsi = radials * 3.2808
+    radialsift = int(radialsi)
+    radialsiin = (radialsi % 1) * 12
+    print("Vertical element:", "%.3f" % element, "m. or", elementift, "ft", "%.1f" % elementiin, "in. Radials or ground plane length away from antenna:", "%.3f" % radials, "m. or", radialsift, "ft", "%.1f" % radialsiin, "in.") 
+      
+if selection == "13": 
+    freq = float(input("Enter resonant frequecny in MHz:")) 
+    desfreq = float(input("Enter desired frequency in MHz:")) 
+    eleadjpercent = (10 * freq / desfreq) - 100 
+    wavelength = light / freq 
+    adj = (eleadjpercent/10) * wavelength 
+    adji = adj * 3.2808
+    adjift = int(adji)
+    adjiin = (adji % 1) * 12
+    print("Your antenna is", "%.3f" % eleadjpercent + "% too long. Reduce the total length of the element by", "%.3f" % adj + "m. or", adjift, "ft", "%.1f" % adjiin, "in.") 
+      
+if selection == "14": 
+    cableselection = "" 
+    while (cableselection != "1") and (cableselection != "2"): 
+        print("1 - RG-58") 
+        print("2 - RG-8") 
+        cableselection = input("Enter your cable type from the selection above:") 
+    if cableselection == "1": 
+        print("1 - 1 MHz") 
+        print("2 - 10 MHz") 
+        print("3 - 50 MHz") 
+        print("4 - 100 MHz") 
+        print("5 - 200 MHz") 
+        freq = input("Enter the closest frequency from the list above that will be used with this cable:") 
+        if freq == "1": 
+            loss = 0.4 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-58 cable at 1 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "2": 
+            loss = 1.4 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-58 cable at 10 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "3": 
+            loss = 3.3 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-58 cable at 50 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "4": 
+            loss = 4.9 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-58 cable at 100 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "5": 
+            loss = 7.3 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-58 cable at 200 MHz at", length, "ft. will be", totalloss, "dBm.") 
+    if cableselection == "2": 
+        print("1 - 1 MHz") 
+        print("2 - 10 MHz") 
+        print("3 - 50 MHz") 
+        print("4 - 100 MHz") 
+        print("5 - 200 MHz") 
+        freq = input("Enter the closest frequency from the list above that will be used with this cable:") 
+        if freq == "1": 
+            loss = 0.5 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-8 cable at 1 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "2": 
+            loss = 1.0 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-8 cable at 10 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "3": 
+            loss = 2.5 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-8 cable at 50 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "4": 
+            loss = 3.6 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-8 cable at 100 MHz at", length, "ft. will be", totalloss, "dBm.") 
+        if freq == "5": 
+            loss = 5.4 
+            length = float(input("Enter the approximate length of your cable in feet:")) 
+            totalloss = loss * length/100 
+            print("The loss of your RG-8 cable at 200 MHz at", length, "ft. will be", totalloss, "dBm.") 
+         
+if selection == "15": 
+    choice = "" 
+    while (choice != "1") and (choice != "2") and (choice != "3") and (choice != "4"): 
+        print("1 - Calculate power") 
+        print("2 - Calculate current") 
+        print("3 - Calculate resistance") 
+        print("4 - Calculate voltage") 
+        choice = input("Enter what you want to calculate from the list above:") 
+    if choice == "1": 
+        volts = float(input("Enter volts:")) 
+        amps = float(input("Enter amps:")) 
+        power = amps * volts 
+        print(power, "W.") 
+    if choice == "2": 
+        current = float(input("Enter volts:")) 
+        watts = float(input("Enter watts:")) 
+        power = watts / volts 
+        print(current, "A.")   
+    if choice == "3": 
+        volts = float(input("Enter volts:")) 
+        amps = float(input("Enter amps:")) 
+        resistance = volts / amps 
+        print(resistance, "ohms.")  
+    if choice == "4": 
+        ohms = float(input("Enter ohms:")) 
+        amps = float(input("Enter amps:")) 
+        voltage = amps / ohms 
+        print(voltage, "volts.") 
+
+          
+elif selection == "exit": 
+    print("Goodbye") 
